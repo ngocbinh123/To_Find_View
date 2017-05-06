@@ -1,4 +1,14 @@
 <resources>
-    <string name="app_name">FindRecyclerView</string>
+    <string name="app_name">To Find View</string>
     <string name="action_settings">Settings</string>
+
+    <string name="mn_item_gps">GPS</string>
+    <string name="mn_item_signal">Signal</string>
+    <string name="mn_item_add_person">Add Person</string>
+    <string name="dummy_content">
+        Hawaii is world-renowned for its beautiful beaches.
+        The islands have every type of beach imaginable: white, black, green and red sand beaches; romantic bays and beach parks for the family; popular shorelines for people watching and off-the-beaten-path sands untouched by development.
+        Discover Hawaii’s world-famous beaches below.
+    </string>
+    <string name="title_to_find">TOFIND</string>
 </resources>

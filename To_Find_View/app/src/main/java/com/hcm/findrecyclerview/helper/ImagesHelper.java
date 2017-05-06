@@ -26,7 +26,6 @@ public class ImagesHelper {
 
     public ArrayList<ImageItem> getAllImage() {
         ArrayList<ImageItem> images = new ArrayList<>();
-        String sortOrder = MediaStore.Images.Media.TITLE + " ASC";
         Cursor cursor = mResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 null, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {

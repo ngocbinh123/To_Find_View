@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_signal"
+        android:enabled="true"
+        android:icon="@mipmap/ic_signal"
+        android:title="@string/mn_item_signal"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_gps"
+        android:enabled="true"
+        android:icon="@mipmap/ic_gps"
+        android:title="@string/mn_item_gps"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_add"
+        android:enabled="true"
+        android:icon="@mipmap/ic_add_person"
+        android:title="@string/mn_item_add_person"
+        app:showAsAction="ifRoom" />
+</menu>
