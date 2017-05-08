@@ -29,11 +29,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
     private static final String TAG = MainAdapter.class.getName();
     private ArrayList<ImageItem> mData;
     private Context mContext;
-
     private OnClickListener mListener;
+
+    private ArrayList<ViewHolder> mHolders;
     public MainAdapter(Context context, ArrayList<ImageItem> images) {
         mContext = context;
         mData = images;
+        mHolders = new ArrayList<>();
+        for (ImageItem item:mData) {
+            mHolders.add(null);
+        }
     }
 
     public interface OnClickListener {
@@ -63,6 +68,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
                     mListener.onClickItem(mData.get(position),position);
             }
         });
+        mHolders.set(position, holder);
     }
 
     @Override
@@ -72,12 +78,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
         return mData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.thumbnail)
-        public ImageView thumbnail;
+        ImageView thumbnail;
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
+        }
+        public ImageView getThumbnail() {
+            return thumbnail;
         }
     }
 
@@ -97,4 +106,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
         this.mData = mData;
     }
 
+    public ViewHolder getHolderItem(int position) {
+        return mHolders.get(position);
+    }
 }

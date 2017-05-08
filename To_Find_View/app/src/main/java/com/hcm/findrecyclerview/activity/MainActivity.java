@@ -3,23 +3,29 @@ package com.hcm.findrecyclerview.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SimpleCursorTreeAdapter;
+
 import com.hcm.findrecyclerview.R;
 import com.hcm.findrecyclerview.adapter.MainAdapter;
 import com.hcm.findrecyclerview.helper.ImagesHelper;
 import com.hcm.findrecyclerview.model.ImageItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getName();
     public static final String ITEM_CURRENT_POSITION = "ITEM_CURRENT_POSITION";
     public static final String IMAGES_LIST = "IMAGES_LIST";
     @BindView(R.id.recycle_view)
@@ -49,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
+    /**
+     * init a common things
+     * */
     private void init() {
         initActionButton();
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -62,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * init float action button
+     * */
     private void initActionButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -73,15 +86,30 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * go to detail screen
+     * @param position: the selected image position
+     * */
     private void goToDetailScreen(int position) {
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+//                new Pair(mAdapter.getHolderItem(position).getThumbnail(), DetailActivity.IMAGE_TRANSITION_NAME));
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                mAdapter.getHolderItem(position).getThumbnail(),
+                DetailActivity.IMAGE_TRANSITION_NAME);
+
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(ITEM_CURRENT_POSITION, position);
         intent.putParcelableArrayListExtra(IMAGES_LIST, mAdapter.getData());
-        startActivity(intent);
+
+        startActivity(intent, options.toBundle());
     }
 
     private ArrayList<ImageItem> getImages() {
-        return ImagesHelper.get(this).getAllImage();
+        long startTime= System.currentTimeMillis();
+        ArrayList<ImageItem> arr = ImagesHelper.get(this).getAllImage();
+        long endTime = System.currentTimeMillis();
+        Log.d(TAG, "effort when getting data: " + String.valueOf(endTime-startTime));
+        return arr;
     }
 
     @Override

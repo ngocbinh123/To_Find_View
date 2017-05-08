@@ -27,7 +27,7 @@ public class ImagesHelper {
     public ArrayList<ImageItem> getAllImage() {
         ArrayList<ImageItem> images = new ArrayList<>();
         Cursor cursor = mResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, null, null, null);
+                null, null, null, " _id asc limit 50");
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 images.add(new ImageItem(cursor));

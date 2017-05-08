@@ -1,12 +1,9 @@
 package com.hcm.findrecyclerview.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.hcm.findrecyclerview.R;
@@ -24,16 +21,11 @@ import butterknife.ButterKnife;
  */
 
 public class DetailActivity extends AppCompatActivity {
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView mBottomBar;
-    private int curPos = 0;
-    private ArrayList<ImageItem> mImages;
-
-    @BindView(R.id.viewPager)
-    ViewPager mViewPager;
-
+    public static final String IMAGE_TRANSITION_NAME = "transitionImage";
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
+    @BindView(R.id.viewPager)
+    ViewPager mViewPager;
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -58,30 +50,16 @@ public class DetailActivity extends AppCompatActivity {
         init();
     }
 
+    /**
+     * init all of things in activity
+     * */
     private void init() {
         // parse data from intent
-        curPos = (int) getIntent().getExtras().get(MainActivity.ITEM_CURRENT_POSITION);
-        mImages = getIntent().getParcelableArrayListExtra(MainActivity.IMAGES_LIST);
+        int curPos = (int) getIntent().getExtras().get(MainActivity.ITEM_CURRENT_POSITION); // current position
+        ArrayList<ImageItem> images = getIntent().getParcelableArrayListExtra(MainActivity.IMAGES_LIST); // images list
 
-        initViewPager();
-        mBottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_gps:
-                        break;
-                    case R.id.action_signal:
-                        break;
-                    case R.id.action_add:
-                        break;
-                }
-                return true;
-            }
-        });
-    }
-
-    private void initViewPager() {
-        mCardAdapter = new CardPagerAdapter(mImages);
+        // init Viewpager
+        mCardAdapter = new CardPagerAdapter(images);
         mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
         mViewPager.setAdapter(mCardAdapter);
         mViewPager.setCurrentItem(curPos);
